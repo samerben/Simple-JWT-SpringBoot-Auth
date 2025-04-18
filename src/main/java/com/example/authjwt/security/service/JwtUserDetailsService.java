@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException; 
 import org.springframework.stereotype.Service;
 
-import com.example.authjwt.models.UserEntity;
 import com.example.authjwt.repository.UserRepository; 
+import com.example.authjwt.models.UserModel;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService { 
@@ -22,14 +22,15 @@ public class JwtUserDetailsService implements UserDetailsService {
     private UserRepository userRepo;
     
     
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepo.findByUsername(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserModel user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+                user.getEmail(),
+                user.getPassword(), 
+                new ArrayList<>()  // Empty list means no authorities (no roles or permissions)
+
         );
     }
 }

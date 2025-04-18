@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.authjwt.security.model.JwtRequestModel;
 import com.example.authjwt.security.model.JwtResponseModel;
-import com.example.authjwt.security.service.AuthService; 
+import com.example.authjwt.security.service.AuthService;
+
+import jakarta.validation.Valid; 
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,7 +22,7 @@ public class JwtController {
  private AuthService authService;
 
  @PostMapping("/register")
- public ResponseEntity<?> register(@RequestBody JwtRequestModel request) {
+ public ResponseEntity<?> register(@Valid @RequestBody JwtRequestModel request) {
      return ResponseEntity.ok(authService.register(request));
  }
 

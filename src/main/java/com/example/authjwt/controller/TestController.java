@@ -21,4 +21,9 @@ public class TestController {
     public String hello() {
         return "Hello Protected World 🌍";
     }
+    
+    @GetMapping("/hi")
+    public String hi() {
+        return "Hi Public World 🌍";
+    }
 }
